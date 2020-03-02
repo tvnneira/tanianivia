@@ -1,0 +1,208 @@
+@article{gallego1997estimadores,
+  title={Estimadores de raz{\'o}n: una revisi{\'o}n},
+  author={Gallego, JA Mayor},
+  journal={Q{\"u}estii{\'o}: quaderns d'estad{\'\i}stica i investigaci{\'o} operativa},
+  volume={21},
+  number={1},
+  year={1997}
+}
+
+@article{guzman1978algunas,
+  title={Algunas consideraciones sobre la naturaleza de la t{\'e}cnica Jackknife de estimaci{\'o}n y las ventajas},
+  author={Guzman, Adela Garcia},
+  journal={Estad{\'\i}stica},
+  volume={78},
+  number={79},
+  year={1978}
+}
+
+@article{martinez_estimacio_1998,
+	title = {{ESTIMACIOÓN} {DEL} {NÚMERO} {DE} {CLUSTERS} {EN} {UNA} {POBLACIÓN} {APLICANDO} {EL} {JACKKNIFE} {GENERALIZADO}},
+	language = {es},
+	author = {Martinez, J J Prieto},
+	year = {1998},
+	pages = {19},
+	file = {Martinez - ESTIMACIO´ N DEL NU´ MERO DE CLUSTERS EN UNA POBLA.pdf:C\:\\Users\\Tania\\Zotero\\storage\\QNP8YV8I\\Martinez - ESTIMACIO´ N DEL NU´ MERO DE CLUSTERS EN UNA POBLA.pdf:application/pdf}
+}
+
+@article{schiaffino_odds_2002,
+	title = {¿{Odds} ratio o razón de proporciones? {Su} utilización en estudios transversales},
+	abstract = {Background: The most commonly used measures of association in cross-sectional studies are the odds ratio (OR) and the prevalence ratio (PR). Some cross-sectional epidemiologic studies describe their results as OR but use the definition of PR. The main aim of this study was to describe and compare different calculation methods for PR described in literature using two situations (prevalence {\textless} 20\% and prevalence {\textgreater} 20\%). Material and methods: A literature search was carried out to determine the most commonly used techniques for estimating the PR. The four most frequent methods were: 1) obtaining the OR using non-conditional logistic regression but using the correct definition; 2) using Breslow-Cox regression; 3) using a generalized linear model with logarithmic transformation and binomial family, and 4) using the conversion formula from OR into PR. The models found were replicated for both situations (prevalence less than 20\% and greater than 20\%) using real data from the 1994 Catalan Health Interview Survey.
+Results: When prevalence was low, no substantial differences were observed in either the estimators or standard errors obtained using the four procedures. When prevalence was high, differences were found between estimators and confidence intervals although all the measures maintained statistical significance.
+Conclusion: All the methods have advantages and disadvantages. Individual researchers should decide which technique is the most appropriate for their data and should be consistent when using an estimator and interpreting it.},
+	language = {es},
+	journal = {Gac Sanit},
+	author = {Schiaffino, A and Rodríguez, M and Pasarín, M I and Regidor, E and Borrell, C and Fernández, E},
+	year = {2002},
+	pages = {5},
+	file = {Schiaffino et al. - ¿Odds ratio o razón de proporciones Su utilizació.pdf:C\:\\Users\\Tania\\Zotero\\storage\\WS9ELZV4\\Schiaffino et al. - ¿Odds ratio o razón de proporciones Su utilizació.pdf:application/pdf}
+}
+
+@article{badii_precision_2007,
+	title = {Precisión de los índices estadísticas: {Técnicas} de jacknife \& bootstrap ({Precision} of statistical indices: {Jacknife} \& bootstrap techniques)},
+	abstract = {The processes involved in jacknife and bootstrap techniques are described. The relevance of these techniques as the means of estimating the degree of sampling precision is explained.},
+	language = {es},
+	author = {Badii and Castillo, J and Wong, A and Landeros, J},
+	year = {2007},
+	pages = {16},
+	file = {Nicolás - Precisión de los índices estadísticas Técnicas de.pdf:C\:\\Users\\Tania\\Zotero\\storage\\HCH74MG4\\Nicolás - Precisión de los índices estadísticas Técnicas de.pdf:application/pdf}
+}
+
+@article{lopez2006evaluacion,
+  title={Evaluaci{\'o}n de m{\'e}todos no param{\'e}tricos para la estimaci{\'o}n de riqueza de especies de plantas le{\~n}osas en cafetales},
+  author={L{\'o}pez G{\'o}mez, Ana Mar{\'\i}a, Williams Linera, Guadalupe},
+  journal={Botanical Sciences},
+  number={78},
+  pages={7--15},
+  year={2006}
+}
+
+@article{evwcombe2006intervalos,
+  title={Intervalos de confianza para las estimaciones de proporciones y las diferencias entre ellas},
+  author={Evwcombe Robert G, Merino Soto Cesar},
+  journal={Interdisciplinaria},
+  volume={23},
+  number={2},
+  pages={141--154},
+  year={2006},
+  publisher={Centro Interamericano de Investigaciones Psicol{\'o}gicas y Ciencias Afines}
+}
+
+@article{pachecoa2007estimador,
+  title={Un estimador jackknife de varianza en muestreo en dos fases con probabilidades desiguales},
+  author={Pacheco Mario, Mart{\'\i}nez Guillermo},
+  journal={Revista Colombiana de Estad{\'\i}stica},
+  volume={30},
+  number={2},
+  pages={203--212},
+  year={2007},
+  publisher={Universidad Nacional de Colombia}
+}
+
+@article{pacheco2010intervalos,
+  title={Intervalos de Confianza Jackknife para Cuantiles en Muestreo con Probabilidades Desiguales},
+  author={Pacheco Mario, Brango Hugo},
+  journal={TecnoL{\'o}gicas},
+  number={2},
+  pages={11--25},
+  year={2010},
+  publisher={Instituto Tecnol{\'o}gico Metropolitano}
+}
+
+@article{tellez_pinerez_inferencia_2014,
+	title = {Inferencia {Bootstrap} bayesiana para una proporción en muestreo con probabilidades desiguales},
+	volume = {7},
+	issn = {2027-3355},
+	url = {http://revistas.usantotomas.edu.co/index.php/estadistica/article/view/1140},
+	doi = {10.15332/s2027-3355.2014.0001.03},
+	abstract = {En este artículo se propone el método bootstrap bayesiano para realizar inferencias sobre una proporción ρ en una población finita a partir de una muestra conprobabilidades desiguales. Vía simulación Monte Carlo se determinó que a partirde una adecuada elección de la distribución a priori de ρ la metodología propuestaobtienen estimaciones menos sesgadas y de menor varianza e intervalos de confianza con niveles de confianza más altos y de menor longitud en comparación con el π-estimador clásico y el estimador BPSP propuesto por Chen (2010). Finalmentese ejemplifica la implementación de la metodología.},
+	language = {es},
+	number = {1},
+	urldate = {2019-04-26},
+	journal = {Comunicaciones en Estadística},
+	author = {Tellez Piñerez, Cristian Fernando and Guerrero, Stalyn Yasid and Pacheco, Mario},
+	month = jun,
+	year = {2014},
+	pages = {31},
+	file = {Tellez Piñerez et al. - 2014 - Inferencia Bootstrap bayesiana para una proporción.pdf:C\:\\Users\\Tania\\Zotero\\storage\\3Y6Q5VPB\\Tellez Piñerez et al. - 2014 - Inferencia Bootstrap bayesiana para una proporción.pdf:application/pdf}
+}
+
+@article{rios_kriging_2014,
+	title = {{KRIGING} {Y} {SIMULACIÓN} {SECUENCIAL} {DE} {INDICADORES} {CON} {PROPORCIONES} {LOCALMENTE} {VARIABLES}},
+	language = {es},
+	author = {Ríos, Tamara Frez},
+	year = {2014},
+	pages = {85},
+	file = {Ríos - KRIGING Y SIMULACIÓN SECUENCIAL DE INDICADORES CON.pdf:C\:\\Users\\Tania\\Zotero\\storage\\27ABC7BU\\Ríos - KRIGING Y SIMULACIÓN SECUENCIAL DE INDICADORES CON.pdf:application/pdf}
+}
+
+@article{ramirez-montoya_remuestreo_2015,
+	title = {Remuestreo {Bootstrap} y {Jackknife} en confiabilidad: {Caso} {Exponencial} y {Weibull}},
+	volume = {25},
+	issn = {2357-5328, 0121-1129},
+	shorttitle = {Remuestreo {Bootstrap} y {Jackknife} en confiabilidad},
+	url = {http://revistas.uptc.edu.co/revistas/index.php/ingenieria/article/view/4137},
+	doi = {10.19053/01211129.4137},
+	abstract = {In this paper the resampling methods bootstrap-t, Jackknife delete I and delete II, are compared using the nonparametric estimators Kaplan-Meier and Nelson-Aalen, frequently used in the practice, taking into account different percentages of censorship, sample sizes and times of interest. The comparation is carried out by simulation, using the mean square error.},
+	language = {es},
+	number = {41},
+	urldate = {2019-04-26},
+	journal = {REVISTA FACULTAD DE INGENIERÍA},
+	author = {Ramírez Montoya, Javier and Osuna-Vergara, Ignacio and Rojas-Mora, Jessica and Guerrero-Gómez, Stalyn},
+	year = {2015},
+	pages = {55},
+	file = {Ramírez-Montoya et al. - 2016 - Remuestreo Bootstrap y Jackknife en confiabilidad.pdf:C\:\\Users\\Tania\\Zotero\\storage\\SUQ26B8T\\Ramírez-Montoya et al. - 2016 - Remuestreo Bootstrap y Jackknife en confiabilidad.pdf:application/pdf}
+}
+
+@book{sarndal2003model,
+  title={Model assisted survey sampling},
+  author={S{\"a}rndal, Carl-Erik and Swensson, Bengt and Wretman, Jan},
+  year={2003},
+  publisher={Springer Science \& Business Media}
+}
+
+@book{gutierrez2009estrategias,
+  title={Estrategias de muestreo dise{\~n}o de encuestas y estimacion de parametros.},
+  author={Guti{\'e}rrez, Hugo Andr{\'e}s},
+  year={2009},
+  publisher={Universidad Santo Tomas, Bogota (Colombia).}
+}
+
+@article{paez2011descripcion,
+  title={Descripci{\'o}n general de la Inferencia Bayesiana y sus aplicaciones en los procesos de gesti{\'o}n},
+  author={P{\'a}ez, Lesley Ofelia Mesa and Lozano, Miller Rivera and Davila, Jes{\'u}s Andr{\'e}s Romero},
+  journal={La simulaci{\'o}n al Servicio de la Academia},
+  year={2011}
+}
+
+@article{meeden1999noninformative,
+  title={A noninformative Bayesian approach for two-stage cluster sampling},
+  author={Meeden, Glen},
+  journal={Sankhy{\=a}: The Indian Journal of Statistics, Series B},
+  pages={133--144},
+  year={1999},
+  publisher={JSTOR}
+}
+
+@article{royall1982balanced,
+  title={Balanced samples and robust Bayesian inference in finite population sampling},
+  author={Royall, Richard M and Pfeffermann, Dany},
+  journal={Biometrika},
+  volume={69},
+  number={2},
+  pages={401--409},
+  year={1982},
+  publisher={Oxford University Press}
+}
+
+@article{angulo2009tecnica,
+  title={T{\'e}cnica de jackknife y estimadores en un modelo lineal},
+  author={Angulo, Edgar Alirio Valencia and Mesa, Fernando},
+  journal={Scientia et technica},
+  volume={1},
+  number={41},
+  year={2009}
+}
+
+@book{shao2012jackknife,
+  title={The jackknife and bootstrap},
+  author={Shao, Jun and Tu, Dongsheng},
+  year={2012},
+  publisher={Springer Science \& Business Media}
+}
+
+@book{box2011bayesian,
+  title={Bayesian inference in statistical analysis},
+  author={Box, George EP and Tiao, George C},
+  volume={40},
+  year={2011},
+  publisher={John Wiley \& Sons}
+}
+
+@book{hollander2013nonparametric,
+  title={Nonparametric statistical methods},
+  author={Hollander, Myles and Wolfe, Douglas A and Chicken, Eric},
+  volume={751},
+  year={2013},
+  publisher={John Wiley \& Sons}
+}
