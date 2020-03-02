@@ -1,0 +1,810 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{apacite}
+\usepackage{cite}
+\usepackage[sectionbib,square]{natbib}
+\usepackage{tabularx}
+\usepackage{enumerate} 
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\renewcommand{\theequation}{\arabic{equation}}
+\newcounter{neq}
+
+\begin{document}
+\begin{titlepage}
+\centering
+\large Trabajo de grado
+\vspace{2.5cm}
+
+Universidad El Bosque\\
+Facultad de Ciencias\\
+Departamento de Matemáticas y Estadística\\
+Programa de Estadística
+\vspace{2cm}
+
+\textit{Tania Vanessa Nivia Neira}\\
+\textit{Estudiante Programa de Estadística}
+\vspace{2cm}
+
+\textit{Cristian Fernando Tellez Piñerez}\\
+\textit{Director}
+
+
+\end{titlepage}
+
+%\addcontentsline{toc}{chapter}{Índice general}
+\tableofcontents
+\newpage
+\section{Título}
+
+Una propuesta bayesiana para la estimación de la proporción vía Jackknife en muestreo probabilístico.
+
+\section{Planteamiento del problema}
+
+Uno de los parámetros más utilizados en los estudios de mercadeo, marketing y educación, es la proporción. Dicho parámetro, tiene la particularidad que es continuo, pero restringido en el intervalo (0,1) como la distribución uniforme o distribución Beta \citep{tellez_pinerez_inferencia_2014}.\\
+\hfill\break
+Hoy en día existen varias investigaciones acompañadas de análisis estadísticos en varias áreas del conocimiento.
+La razón por la cual se usan este tipo de análisis es porque su propósito es extraer la información más relevante para deducir características de la población. Como ya se mencionó anteriormente, estas poblaciones surgen de áreas variadas como la ciencia, actuaría, medicina, entre otras. Por ejemplo, para el caso de la medicina es de interés saber el porcentaje de pacientes que sobreviven a una cirugía de corazón abierto, para el caso de actuaría es importante saber el porcentaje de asegurados que fallecen en un periodo determinado y para el caso de la ciencia por ejemplo biológica, es clave saber el porcentaje de bacterias que se dispersan en ciertos lugares en menor tiempo. \\
+\hfill\break
+Por otra parte, Jackknife es una técnica clásica basada en corregir el sesgo de estimación, siendo esta una aproximación lineal del Bootstrapping. Además, la teoría respalda que la metodología Jackknife es mejor en cuanto a eficiencia comparada con otros métodos de remuestreo.\\
+\hfill\break
+En la literatura, existen diversas técnicas para estimar este parámetro, sin embargo, ninguno utiliza la técnica Jackknife integrada con metodología bayesiana. Dada la importancia que tiene la proporción en todo tipo de investigación se requiere ir mejorando cada día más los estimadores de dicho parámetro para generar más información en cuanto a proporciones. A raíz de lo descrito ¿Es posible estimar una proporción mediante muestreo probabilístico utilizando la metodología Jacknife junto a la teoría bayesiana, que mejore los resultados de estimación? La anterior pregunta es el fundamento de esta propuesta de investigación.
+
+\section{Objetivos}
+\subsection{Objetivo general}
+
+Construir un estimador para la proporción en muestreo probabilístico utilizando la metodología Jacknife y teoría bayesiana.
+
+\subsection{Objetivos específicos}
+
+\begin{itemize}
+    \item Incorporar la técnica Jacknife y teoría bayesiana en el muestreo probabilístico para estimar proporciones.
+    \item Comparar vía simulación en términos de sesgo y varianza el estimador propuesto contra algunos estimadores planteados en la literatura.
+    \item Realizar una aplicación del estimador propuesto con datos reales.
+    \end{itemize}
+
+\section{Antecedentes}
+
+En la literatura especializada, hay varias formas de estimar dicho parámetro, unas más sofisticadas que otras. \citet{sarndal2003model}, muestra la forma clásica de estimar dicho parámetro abordado desde el muestreo probabilístico. Por otro lado, uno de los primeros acercamientos a la estimación de parámetros utilizando métodos de remuestreo, fue presentada por \citet{guzman1978algunas}, quienes describen el método de estimación Jackknife, así como sus propiedades y algunas aplicaciones en la inferencia estadística. Uno de los resultados más relevantes este trabajo, es que esta metodología de estimación permite reducir tanto el sesgo que introduce el remuestreo, como la variación implícita en este. Lo que implica que se obtienen estimadores con poco sesgo y altas eficiencias.\\
+\hfill\break
+Por otro lado, \citet{gallego1997estimadores} expone mediante los estimadores de razón la utilización de información auxiliar en la estimación de parámetros definidos sobre poblaciones finitas.  En este tipo de estimaciones, surge un problema que es el sesgo, esto lleva a la implementación de diseños muestrales tales como $\pi PT$ y PPT o modificar las expresiones de los estimadores con el fin de tener sesgo reducido y estrategias insesgadas, manteniendo simplicidad del error de muestreo. En el año siguiente \citet{martinez_estimacio_1998} desarrolla una secuencia finita de estimadores no paramétricos para el número de clústers utilizando el método Jackknife. Adicional a lo anterior, los autores en su trabajo proponen un estimador sesgado, el cual es corregido y ajustado mediante Jackknife generalizado para el número de clúster en una población.\\
+\hfill\break 
+Desde otra perspectiva, \citet{schiaffino_odds_2002}, describen y comparan el cálculo de la razón de proporciones en diferentes técnicas como regresión logística, regresión de Breslow-cox, modelo log-binomial y formula de conversión.\\
+\hfill\break
+Por su parte, \citet{lopez2006evaluacion}, compararon la riqueza de árboles muestreada con la estimada utilizando estimadores no paramétricos como Jackknife 1, Jackknife 2, Bootstrap, entre otras. La precisión de los estimadores se realizó mediante la estimación de sesgo y exactitud por medio de la comparación de la riqueza estimada con la riqueza verdadera, como resultado obtuvieron que Jackknife 2 fue el mejor en cuanto a precisión, así que este estimador puede ser el más adecuado para estimar la riqueza en sistemas manejados como cafetales. Adicional a este año \citet{evwcombe2006intervalos}, presentan métodos para calcular los intervalos de confianza para proporciones y diferencias entre proporciones que superan los procedimientos tradicionales para estos cálculos. Estos métodos son basados en el método score.\\
+\hfill\break
+Un año después, \citet{pachecoa2007estimador} propone un estimador a partir del estimador Jackknife de varianza por Berger y Skinner en el año 2005, este estimador propuesto permite la estimación de la varianza, asumiendo que los parámetros por estimar y sus estimadores se pueden escribir como funciones de medias poblacionales y muestrales, todo esto empleando la metodología Jackknife para muestreo con probabilidades desiguales. En este mismo año \citet{badii_precision_2007}, plantean, como a partir de Jackknife y Bootstrap se puede estimar la precisión de muchos índices en datos muestrales. Estas técnicas fueron evaluadas en un coeficiente muy conocido como es el de Gini de jerarquía en tamaño y en el índice de Jaccard de similitud de comunidades, así, terminan de utilizar Jackknife para calcular el sesgo y el error estándar para una estadística.\\
+\hfill\break 
+En 2010 \citet{pacheco2010intervalos}, proponen la construcción de intervalos de confianza en muestreo con probabilidades desiguales, empleando un estimador basado en la metodología Jackknife de varianza para muestreo con probabilidades desiguales que funcione mejor que el estimador Jackknife clásico. Todo esto demostrado vía simulación y llegando a la conclusión de que la metodología clásica del Jackknife no es adecuada para entregar intervalos de confianza excesivamente amplios.\\
+\hfill\break
+Una aproximación a la estimación de la proporción utilizando métodos de remuestreo, fue propuesta por \citet{tellez_pinerez_inferencia_2014}, quienes proponen realizar inferencias sobre una proporción en una población finita a partir de muestras con probabilidades desiguales, pero utilizando para ellos la metodología Bootstrap. En este mismo año \citet{rios_kriging_2014} propone siete estrategias mediante los cuales modelan la incertidumbre geológica en un yacimiento minero, estas estrategias de modelos se basan en estimar las proporciones de unidades geológicas con estadísticas geográficamente ponderadas y luego aplican simulación plurigaussiana, finalmente para validar los modelos utilizan la metodología Jackknife.\\
+\hfill\break 
+Otro trabajo relacionado con las metodologías Bootstrap y Jackknife, fue desarrollado por \citet{ramirez-montoya_remuestreo_2015}, quienes encuentran una estrategia para estimar la función de confiabilidad o, también llamada función de supervivencia a través de las técnicas antes mencionadas.\\
+\hfill\break
+Como se pudo observar anteriormente, la metodología Jackknife es ampliamente utilizada, tanto en el muestreo probabilístico como en otras áreas del conocimiento por sus propiedades y fácil utilización. Adicional a lo anterior, en la revisión literaria no se encontró ningún trabajo que integre la estimación de la proporción mediante la técnica Jackknife en muestreo probabilístico con probabilidades desiguales. Es por esto por lo que el objetivo principal de este trabajo es proponer un estimador para la proporción en muestreo probabilístico utilizando la metodología Jackknife.
+
+\section{Metodología}
+
+Para estimar la proporción utilizando la metodología propuesta en este trabajo, se consideraron tres pasos fundamentales, los cuales se describen a continuación. El primero, consiste en determinar una estrategia general de muestreo con la cual se desee estimar, de manera clásica la proporción y su varianza. En segunda instancia, se deben escoger las distribuciones apriori informativas y no informativas que me permitan tener buenas estimaciones de manera bayesiana, por último, integrar las estrategias de muestreo y las metodologías bayesianas que permitan obtener distribuciones posteriores del parámetro de interés, que para nuestro caso es la proporción.\\
+\hfill\break
+Para el primer aspecto correspondiente a la elección de un diseño muestral, se probarán los diseños muestrales más comunes y eficientes, como por ejemplo MAS, PPT y $\pi PT$. Estos se trabajarán bajo las estrategias de muestreo estratificado y en varias etapas.\\
+\hfill\break
+Para la selección de una distribución apriori se examinarán distribuciones previas uniforme y de ser posible aprioris de Jefreys, también se tendrán en cuenta distribuciones conjugadas de la forma $Beta(\alpha,\beta)$, dada la naturaleza del parámetro.\\
+\hfill\break
+Para la integración de la metodología bayesiana y la teoría de estimación de parámetros mediante muestreo probabilístico, se examinarán las estrategias paramétricas y no paramétricas para la modelación de parámetros.\\
+\hfill\break
+Finalmente, se realizará una aplicación con la metodología propuesta de tal forma que se ejemplifique el uso de esta a nivel práctico.
+
+\section{Marco teórico}
+
+En lo siguiente se dará a conocer las definiciones más importantes para el desarrollo de este proyecto junto con las ecuaciones respectivas, todo esto obtenido por escritos realizados por \citet{sarndal2003model} y \citet{gutierrez2009estrategias}.
+
+\subsection{Muestreo probabilístico}
+Según \citet{sarndal2003model} se denomina muestreo probabilístico al proceso de selección de una muestra que satisface las siguientes condiciones:
+\begin{enumerate}[1.]
+    \item Se puede definir el conjunto de muestras, $S =\begin{Bmatrix} s_{1},. . . ,s_{M}\end{Bmatrix}$, posibles que se derivan del proceso de muestreo.
+    \item A cada muestra posible, $s$, le corresponde una probabilidad de selección $p(s)$ conocida.
+    \item El proceso de selección garantiza que todo elemento de la población tenga una probabilidad de selección mayor a cero.
+\end{enumerate}
+
+\subsubsection{Marco muestral}
+El marco muestral es todo material o dispositivo usado para obtener acceso a los elementos de la población de interés. Con este se delimita, identifica y permite tener acceso a los elementos de la población objetivo. En este También se encuentra información auxiliar correspondiente a cada elemento de la población. En una encuesta, las unidades del marco son los sujetos a los cuales se le aplica la selección por muestreo probabilístico \citep{sarndal2003model}.
+
+\subsubsection{Diseño muestral}
+Un diseño muestral es una función $p( \cdot)$ tal que, $p(s)$ denota la probabilidad de selección de la muestra $s$. De esta manera se llamará diseño de muestreo al conjunto de probabilidades de selección de todas las muestras posibles. Para un diseño muestral dado $p(\cdot)$, podemos considerar a cada muestra $s$ como el resultado de una variable aleatoria $S$, con distribución de probabilidad especificada por $p(\cdot )$. Así, si $S$ es el conjunto de todas las muestras posibles $s$, entonces,
+
+\begin{equation}
+P_{r}(S=s)=P(s)
+\addtocounter{neq}{1}
+\end{equation}
+
+Para cada $s \in S$, y debido a que $p(s)$ es una distribución de probabilidad en $S$, se tiene que,
+$p(s) \geq 0, \forall$ $s \in S$.
+
+\subsubsection{Probabilidades de inclusión}
+La inclusión de un elemento $k$ en una muestra es un evento aleatorio indicado por la variable aleatoria $I_{k}$, definida por:
+
+\begin{equation}
+I_{k}=\left\{\begin{matrix}
+1 & si, k \in S\\ 
+0 & si, k \notin S 
+\end{matrix}\right.
+\addtocounter{neq}{1}
+\end{equation}
+
+
+La probabilidad de que un elemento $k$ sea incluido en una muestra, denotado por $\pi_{k}$, es obtenido del diseño muestral dado como:
+
+\begin{equation}
+\pi_{k}= P_{r}(k\in S)=Pr(I_{k}=1)=\sum_{k\in S}P(s)
+\addtocounter{neq}{1}    
+\end{equation}
+
+La probabilidad de que un par de elementos $k$ y $l$ sean incluidos en una muestra $s$ será notado por $\pi_{k,l}$ y se obtiene como:
+
+\begin{equation}
+\pi= P_{r}(k, l\in S)=Pr(I_{k}I_{l}=1)=\sum_{k,l\in S}P(s)
+\addtocounter{neq}{1}     
+\end{equation}
+
+
+En particular, $\pi_{k,l} = \pi_{l,k}$ para todo $k$ y $l$, y $\pi_{k,l} = \pi_{k}$ si $k = l$.
+\\
+\newline
+Las probabilidades $\pi_{k}$ son llamadas probabilidades de inclusión de primer orden, y las probabilidades $\pi_{k,l}$ son llamadas probabilidades de inclusión de segundo orden.
+
+\subsubsection{El estimador de Horvitz-Tompson para el total}
+Considere una población $U$ de $N$ elementos. Sea $s$ una muestra de tamaño fijo $n$ sacada sin reemplazo de $U$ de acuerdo a un diseño muestral dado $p(s)$, el interés es estimar el total poblacional de la variable de estudio $y$.
+\begin{equation}
+t=\sum_{k\in U}y_{k}
+\addtocounter{neq}{1}
+\end{equation}
+
+En función de los valores $\pi_{k}$. Para tal fin se tiene $\pi$ el estimador de Horvitz-Thompson para el total:
+\begin{equation}
+\hat{t}_{\pi} = \sum_{k\in s}\frac{y_{k}}{\pi_{k}}=\sum_{k\in s}\check{y}_{k}
+\addtocounter{neq}{1}
+\end{equation}
+
+con $\check{y}=\frac{y_{k}}{\pi_{k}}$.
+\\
+\newline
+La varianza del estimador Horvitz-Thompson ($\pi$) es:
+\begin{equation}
+V(\hat{t}_\pi)=\sum_{k\in U}\sum_{l\in U}\Delta_{kl}\check{y}_{k}\check{y}_l
+\addtocounter{neq}{1}
+\end{equation}
+
+con $\Delta_{kl}=\pi_{kl}-\pi_{k}\pi_{l}$ y $\pi_{kl} > 0$ para todo $k$ y $l$ $\in U$.
+\\
+\newline
+Un estimador insesgado para $V(\hat{t}_{\pi})$ es:
+
+\begin{equation}
+\hat{V}(\hat{t}_\pi)=\sum_{k\in U}\sum_{l\in U}\check{\Delta}_{kl}\check{y}_{k}\check{y}_l I_{k}I_{l} 
+\addtocounter{neq}{1}
+\end{equation}
+
+donde $\check{\Delta}_{kl}=\frac{\Delta_{kl}}{\pi_{kl}}$, con $\pi_{kl}>0$ para todo $k$ y $l$ $\in U$.
+
+\subsubsection{Intervalos de confianza}
+Un intervalo de confianza es un intervalo aleatorio de la forma:
+
+\begin{equation}
+IC(s)=[t_{inf}(s),t_{sup}(s)]
+    \addtocounter{neq}{1}
+\end{equation}
+
+donde los límites del intervalo $t_{inf}(s)$ y $t_{sup}(s)$ son dos estadísticas tales que $t_{inf}(s) < t_{sup}(s)$, para todo s.
+\\
+\newline
+Para el total poblacional $t$ y $\hat{t}$ un estimador puntual de este, un intervalo de confianza para $t$ de aproximadamente el $100(1 - \alpha)\%$ es:
+
+\begin{equation}
+\hat{t} \pm z_{1-\alpha}\sqrt{\hat{V}(\hat{t}_\pi)}
+    \addtocounter{neq}{1}
+\end{equation}
+
+
+
+\subsubsection{Estimación de parámetros más complejos}
+Cuando un parámetro puede ser expresado como una función de $q$ totales poblacionales, $t_{1},t_{2},...,t_{q}$, tales que:
+
+\begin{equation}
+\theta=f(t_{1},t_{2},...,t_{q})
+    \addtocounter{neq}{1}
+\end{equation}
+
+donde, $t_{j}=\sum_{k\in U}\check{y}_{kl}$, con $j=1,2,...,q$. Cuya estimación es:
+\\
+\begin{equation}
+\hat{\theta}=f(\hat{t}_{1\pi},\hat{t}_{2\pi},...,\hat{t}_{q\pi})
+    \addtocounter{neq}{1}
+\end{equation}
+
+donde, $\hat{t}_{j\pi}=\sum_{k\in S}\check{y}$, con $j=1,2,...,q$.
+\\
+\newline
+Luego, podemos encontrar una aproximación a este estimador a través de la técnica de linealización de primer orden de Taylor de la forma:
+\begin{equation}
+\hat{\theta}=\theta_{0}=\theta + \sum_{j=1}^{q}a_{j}(\hat{t}_{j\pi}-t_{j})
+\addtocounter{neq}{1}    
+\end{equation}
+
+donde,
+\begin{equation}
+a_{j}=\frac{\partial f(t_{1}, t_{2}, ..., t_{q})}{\partial t_{j}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+Así, es posible aproximar la varianza de $\hat{\theta}$ con la varianza de la aproximación $\hat{\theta}_{0}$, como sigue:
+\begin{equation}
+AV(\hat{\theta})=AV(\hat{\theta}_{0})=\sum_{k\in U}\sum_{l\in U}\Delta_{kl}\check{u}_{k}\check{u}_{l}
+    \addtocounter{neq}{1}
+\end{equation}
+
+con, $u_{k}=\sum_{j=1}^{k}a_{j}\check{y}_{kj}$. Luego, para enconrar el estimador de $AV(\hat{\theta})$, hacemos:
+\begin{equation}
+\hat{u}_{k}=\sum_{j=1}^{k}\hat{a}_{j}\check{y}_{kj}
+    \addtocounter{neq}{1}
+\end{equation}
+
+por tanto, $\hat{V}(\hat{\theta})$ es:
+\begin{equation}
+\hat{V}(\hat{\theta}) = \sum_{k\in S}\sum_{l\in S}\check{\Delta}_{kl}\frac{\hat{u}_{k}}{\pi_{k}}\frac{\hat{u}_{l}}{\pi_{l}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+
+\subsubsection{Estimación de una razón}
+Uno de los parámetros de mayor interés en la práctica es la razón entre dos totales poblacionales:
+\begin{equation}
+R=\frac{t_{y}}{t_{z}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+Con estimador,
+\begin{equation}
+\hat{R}=\frac{\hat{t}_{y}}{\hat{t}_{z}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+de lo anterior tenemos que $f(t_{1},t_{2}) = t_{1}/t_{2}$, por tanto,
+\begin{equation}
+a_{1}= \frac{1}{t_{2}}=\frac{1}{t_{z}}
+ \addtocounter{neq}{1}
+\end{equation}
+
+\begin{equation}
+a_{2}= \frac{t_{1}}{t^{2}_{2}}=\frac{t_{y}}{t^{2}_{z}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+así, con $y_{1k}=y_{k}, y_{2k}=z_{k}$
+
+\begin{equation}
+u_{k}=\frac{y_{k}-Rz_{k}}{t_{z}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+\begin{equation}
+\hat{u}_{k}=\frac{y_{k}-\hat{R}z_{k}}{\hat{t}_{z}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+se puede aproximar la varianza de R con:
+\begin{equation}
+AV(\hat{R}) = \frac{1}{t^{2}_{z}}\sum _{k\in U}\sum _{l\in U}\check{\Delta} _{kl}\frac{y_{k}-Rz_{k}}{\pi_{k}}.\frac{y_{l}-Rz_{l}}{\pi_{l}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+\begin{equation}
+\hat{V}(\hat{R}) = \frac{1}{\hat{t}^{2}_{z}}\sum _{k\in U}\sum _{l\in U}\check{\Delta} _{kl}\frac{y_{k}-\hat{R}z_{k}}{\pi_{k}}.\frac{y_{l}-\hat{R}z_{l}}{\pi_{l}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+
+\subsubsection{Estimación de una proporción}
+La estimación es un caso particular de la razón, haciendo $z_{k}=1,\forall k \in U$.
+\begin{equation}
+y_{k}=\left\{\begin{matrix}
+1 & si, k \in U_d\\ 
+0 & e.o.c
+\end{matrix}\right.
+    \addtocounter{neq}{1}
+\end{equation}
+
+en este caso, $t_{z}=N$ y $t_{y}=N_{d}$, entonces,
+\begin{equation}
+p=\frac{N_{d}}{N}
+    \addtocounter{neq}{1}
+\end{equation}
+
+con estimador,
+
+\begin{equation}
+\hat{p}=\frac{\hat{N}_{d}}{\hat{N}}.
+    \addtocounter{neq}{1}
+\end{equation}
+
+Se puede aproximar la varianza de la proporción y su varianza aproximada por:
+
+\begin{equation}
+AV(\hat{p}) = \frac{1}{N^{2}}\sum _{k\in U}\sum _{l\in U}\check{\Delta} _{kl}\frac{1-p}{\pi_{k}}.\frac{1-p}{\pi_{l}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+\begin{equation}
+\hat{V}(\hat{R}) = \frac{1}{\hat{N}^{2}}\sum _{k\in U}\sum _{l\in U}\check{\Delta} _{kl}\frac{1-\hat{p}}{\pi_{k}}.\frac{1-\hat{p}}{\pi_{l}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+\subsection{Jackknife}
+Los métodos de remuestreo son técnicas basadas en
+tomar diferentes muestras de una muestra dada y hacer
+una estimación de un parámetro en cada una de ellas,
+luego relacionando todas las estimaciones se obtiene un
+nuevo estimador \citep{angulo2009tecnica}.
+
+\subsubsection{Método Jackknife}
+El método de Jackknife fue presentado por Quenouille en 1949 y es una de las primeras técnicas para obtener estimadores estadísticos fiables.
+\\
+\newline
+
+Supongamos que tenemos una muestra aleatoria $Y_{1}, Y_{2}, \cdots, Y_{n}$ y un estimador $t$ del parámetro $\theta.$ Sea $t_{i}$ el estimador evaluado en los $n-1$ elementos que quedan después de separar el $k-ésimo$ elemento de la muestra $t_{k}=t(Y_{1}, Y_{2}, \cdots, Y_{k-1},Y_{k+1}, \cdots, Y_{n}),$ es decir, esta técnica se centra en las muestras que dejan de lado una observación a la vez y estas se llaman muestras Jackknife.
+\\
+Ahora se construye la expresión $S_{k}=nt-(n-1)t_{k}$; donde $k=1,2,\cdots,n$ la cual recibe el nombre de pseudovalor. Quenouille define el estimador de Jackknife $t_{j}$ simple de $\theta$ asociado al estimador $t$ y a la muestra $Y_{1}, Y_{2}, \cdots, Y_{n}$ como el promedio de los pseudovalores.
+\begin{equation}
+t_{j}=\frac{1}{n}\sum_{k=1}^{n}s_{k}=nt-\frac{n-1}{n}\sum_{k=1}^{n}t_{k}
+\end{equation}
+Por otra parte, una de las aplicaciones más importantes de la técnica de jackknife es la reducción del sesgo.
+
+
+\subsection{Estadística bayesiana}
+La estadística bayesiana es un tipo de inferencia estadística en la que las evidencias u observaciones se emplean para actualizar o inferir la probabilidad de que una hipótesis pueda ser cierta. El nombre "bayesiana" proviene de uso frecuente que se hace del Teorema de Bayes durante el proceso de inferencia.
+\\
+\newline
+La inferencia bayesiana utiliza aspectos del método científico, que implica recolectar evidencia que se considera consistente o inconsistente con una hipótesis dada.
+\\
+\newline
+A medida que la evidencia se acumula, el grado de creencia en una hipótesis se va modificando. Con evidencia suficiente, a menudo podrá hacerse muy alto o muy bajo. Así, los que sostienen la inferencia bayesiana dicen que puede ser utilizada para discriminar entre hipótesis en conflicto: las hipótesis con un grado de creencia muy alto deben ser aceptadas como verdaderas y las que tienen un grado de creencia muy bajo deben ser rechazadas como falsas.
+\\
+\newline
+Sin embargo, los detractores dicen que este método de inferencia puede estar afectado por un prejuicio debido a las creencias iniciales que se deben sostener antes de comenzar a recolectar cualquier evidencia.
+
+\subsubsection{Teorema de bayes}
+Sean $B_{1},B_{2},...,B_{k}$, eventos mutuamente excluyentes y exhaustivos. Para cualquier evento nuevo A, tenemos:
+
+\begin{equation}
+P(B_{i}|A)=\frac{P(B_{i}\cap A)}{P(A)}=\frac{P(A|B_{i})P(B_{i})}{\sum_{i=1}^{k}P(A|B_{i})P(B_{i})}.
+    \addtocounter{neq}{1}
+\end{equation}
+
+
+\paragraph{Teorema de bayes para variables aleatorias}\\
+\hfill
+\newline
+\\
+Sean $X$ y $Y$ variables aleatorias con funcion de densidad de probabilidad $f(x|y)$ y $g(y)$, de donde se tiene que:
+
+\begin{equation}
+g(y|x)=\frac{f(x|y)g(y)}{\int f(x|y)g(y)d\theta }
+\addtocounter{neq}{1}
+\end{equation}
+
+\paragraph{Distribución apriori}\\
+\hfill
+\newline
+\\
+En estadística Bayesiana, una distribución de probabilidad apriori de una una cantidad $p$ desconocida, es la distribución de probabilidad que expresa alguna incertidumbre acerca de $p$ antes de tomar en cuenta los "datos".
+
+\paragraph{Distribución posteriori}\\
+\hfill
+\newline
+\\
+Sean $X$ y $\theta$ variables aleatorias con función de densidad de probabilidad $f(x | \theta)$ y $\xi (\theta)$.
+
+\begin{equation}
+\xi(\theta|x)=\frac{f(x|\theta)\xi(\theta)}{\int f(x|\theta)\xi(\theta)d\theta } \addtocounter{neq}{1}
+\end{equation}
+\\
+Dentro del marco bayesiano tenemos que:
+\begin{itemize}
+    \item $X:$ Datos (escalar o vector o matriz).
+    \item $\theta:$ Parámetro desconocido (escalar o vector o matriz).
+    \item $f(x_{1}\cdot\cdot\cdot x_{n}|\theta):$ Verosimilitud de los datos dado el parámetro (desconocido) $\theta$.
+    \item $\xi(\theta):$ Distribución a-priori de $\theta$.
+\end{itemize}
+Así se tiene que:
+
+\begin{equation}
+\xi(\theta|x_{1}\cdot\cdot\cdot x_{n} )=\frac{f(x_{1}\cdot\cdot\cdot x_{n} |\theta)\xi(\theta)}{\int f(x_{1}\cdot\cdot\cdot x_{n} |\theta)\xi(\theta)d\theta } 
+    \addtocounter{neq}{1}
+\end{equation}
+
+Es llamado distribución posteriori.
+
+\subsubsection{Inferencia Bayesiana}
+
+Cuando se utilizan evidencias y observaciones para establecer que una suposición sea cierta, es lo que se denomina como Inferencia Bayesiana, sumado a lo anterior, esta observa la evidencia y calcula un valor estimado según el grado de creencia planteado en la hipótesis \citep{paez2011descripcion}.
+
+\paragraph{Estimación puntual}\\
+\hfill
+\newline
+\\
+Dada una distribución sobre un parámetro particular, digamos $\theta$, requerimos seleccionar un mecanismo para escoger un 'buen' estimador $\hat{\theta}$. Supongamos que $\theta_{0}$ es el verdadero parámetro, desconocido. Sea $d$ nuestra adivinanza de este valor. Debemos de alguna forma medir el error que cometemos (digamos que esto puede ser una multa o un pago) al adivinar a $\theta_{0}$ mediante $d$.
+\\
+\newline
+Esto puede ser medido por $(d−\theta_{0})^2$ o por $|d−\theta_{0}|$ o mediante alguna otra función. Un problema estadístico puede resumirse como $(S,\Omega ,D,L)$, donde:\\
+\newline
+$S:$ Es el espacio muestral de un experimento relevante que tiene asociada una variable aleatoria $X$ cuya distribución de probabilidad está parametrizada por un elemento de $\Omega$.\\
+\newline
+$\Omega:$ Espacio parametral (en un sentido amplio).\\
+\newline
+$D:$ Un espacio de decisiones.\\
+\newline
+$L:$ Una función de pérdida.
+\\
+\newline
+Una vez un problema estadístico ha sido especificado, el problema de inferencia estadística es seleccionar un procedimiento (estadístico), a veces llamado una función de decisión, que nos describe la forma de tomar una decisión una vez un resultado muestral ha sido obtenido.
+\begin{itemize}
+    \item Una función de decisión o procedimiento estadístico es una función o estadístico $d$ que mapea de $S$ a $D$.
+    \item Sea $D$ un espacio arbitrario de decisiones. Una función no negativa $L$ que mapea de $\Omega×D$ a $R$ es llamada una función de pérdida. 
+    \item El valor esperado de $L(\theta,d(X))$ cuando $\theta$ es el verdadero valor es llamada la función de riesgo.
+    \begin{equation}
+    R(\theta,d)=E_{\theta}(L(\theta,d(X)))=\int L(\theta,d(x))dP_{\theta}(x)
+        \addtocounter{neq}{1}
+    \end{equation}
+    
+\end{itemize}
+
+\paragraph{Función de pérdida cuadrática}\\
+\hfill
+\newline
+\begin{equation}
+L(\theta,d)=(d-\theta)^2
+    \addtocounter{neq}{1}
+\end{equation}
+
+Miremos el riesgo para esta función de pérdida. Sea:
+\begin{equation}
+b=E_{\xi(\theta|x)}(\theta)=\int \theta\xi(\theta|x)d\theta
+    \addtocounter{neq}{1}
+\end{equation}
+
+el promedio de la distribución posteriori. Entonces,
+\begin{equation}
+E(L(\theta,d))\geq \int (b-\theta)^2\xi(\theta|x)d\theta
+    \addtocounter{neq}{1}
+\end{equation}
+
+para cualquier valor de $d$. La desigualdad anterior se convierte en igualdad cuando $d = b$. El estimador bayesiano bajo una función de pérdida cuadrática es la media de la distribución posterior.
+
+\paragraph{Función de pérdida error absoluto}\\
+\hfill
+\newline
+\\
+Sea $L(d,\theta) = |d −\theta|$ la función de perdida asociada a el parametro $\theta$, y $d$ nuestra adivinanza a este valor. El riesgo es minimizado tomando $d$ como la mediana de la distribución posterior, digamos $d^*$. O sea, la mediana es el estimador bayesiano cuando la función de pérdida es el valor absoluto. Para mostrar esto supongamos otra decisión tal que $d > d^*$. Entonces,
+
+\begin{equation}
+|\theta -d|-|\theta-d^{*}|=\left\{\begin{matrix}
+d^{*}-d &si  &\theta\geq d \\ 
+d+d^{*}-2\theta &si  &d^{*}\leq \theta\leq d \\ 
+d-d^{*} &si  &\theta\leq d^{*} 
+\end{matrix}\right.
+    \addtocounter{neq}{1}
+\end{equation}
+
+Ya que $d + d^{*}−2\theta > d^{*}−d$ cuando $d^{*} \leq  \theta \leq  d$ entonces el siguiente resultado se consigue:
+\begin{equation}
+E(|\theta-d|-|\theta-d^*|)=(d-d^*)[P(\theta\leq d^*)-P(\theta > d^*)]
+    \addtocounter{neq}{1}
+\end{equation}
+
+Esta última desigualdad sigue del hecho que $d^*$ es la mediana de la distribución de $\theta$. La primera desigualdad en este conjunto de ecuaciones será una igualdad si, y solo si, $d^* \leq \theta \leq d = 0$. La desigualdad final será una igualdad si, y solo sí, $P(\theta \leq d^*) = P(\theta > d^*) = \frac{1}{2}$.\\
+\newline
+Estas condiciones implican que $d$ es también una mediana. Por lo tanto, $E(|\theta−d|) \geq E(|\theta−d^*|)$ y la igualdad se cumple si, y solo si, $d$ es también mediana.
+
+\paragraph{Función de pérdida escalonada}\\
+\hfill
+\newline
+\begin{equation}
+L(\theta,d)=\left\{\begin{matrix}
+0 &si|d-\theta|\leq \delta  \\ 
+1 &si|d-\theta|\geq \delta  
+\end{matrix}\right.
+    \addtocounter{neq}{1}
+\end{equation}
+
+donde $\delta$ es un número predeterminado, usualmente pequeño, así,
+\begin{equation}
+E(L(\theta,d))\approx 1-2\delta\xi(d|x)
+    \addtocounter{neq}{1}
+\end{equation}
+
+Para minimizar el riesgo es necesario maximizar $\xi (d | x)$ con respecto a $d$ y el estimador bayesiano es el maximizador. Por lo tanto, el estimador bayesiano será el que maximiza la posterior, esto es, el valor modal.
+
+\subsection{Métodos bayesianos en el muestreo de poblaciones finita}
+\subsubsection{Matriz empirica bayesiana para el $\pi$ estimador}
+\citet{meeden1999noninformative} presenta un Estimador Bayesiano empírico en poblaciones finita para cantidades de interés $y_{1},y_{2},\cdot\cdot\cdot,y_{N}$. Asumiendo el modelo $Y = A1\theta + e$. Donde $Y$ es $N \times  1$. El vector $y_{s}$ representa las unidades incluidas en la muestra y el vector $y_{r}$ las unidades no incluidas en la muestra.\\
+\newline
+$Y=\begin{bmatrix}
+y_{s}\\ 
+y_{r}
+\end{bmatrix}$, con $y_{s}$ un vector de $n \times  1$ y $y_{r}$ un vector de $(N-n) \times  1$.\\
+\newline
+Se defina A una matriz de $N \times  N$ como:
+\begin{equation}
+A=\begin{bmatrix}
+A_{s} &0 \\ 
+0 & A_{r}
+\end{bmatrix}
+    \addtocounter{neq}{1}
+\end{equation}
+
+Con, $A_{s}$ de $n \times  n $ y $A_{r}$ de $(N-n) \times  (N-n)$ con elementos en las diagonales $a_{1},a_{2},\cdot\cdot\cdot,a_{n}$ y $a_{n+1},a_{n+2},\cdot\cdot\cdot,a_{N}$ respectivamente.
+\\
+\newline
+Se define 1 como un vector de $N \times  1$ así,\\
+\newline
+$1=\begin{bmatrix}
+1_{s}\\ 
+1_{r}
+\end{bmatrix}$, con $1_{s}$ un vector de $n \times  1$ y $1_{r}$ un vector de $(N\times n) \times  1$, $\theta$ un parámetro desconocido y $e \sim  N(0,V)$, con:
+\begin{equation}
+V=\begin{bmatrix}
+V_{ss} &0 \\ 
+0 & V_{rr}
+\end{bmatrix}
+    \addtocounter{neq}{1}
+\end{equation}
+
+donde $V_{ss}$ contiene en sus diagonales $\sigma_{j}^2$, con $j = 1,2,\cdot\cdot\cdot,n$ y $V_{rr}$ contiene en sus diagonales $\sigma_{j}^2$,con $j = n + 1,n + 2,\cdot\cdot\cdot,N$. 
+\\
+\newline
+Se define el Total poblacional como:
+\begin{equation}
+T=1^{t}Y=1_{s}^{t}Y_{s}+1_{r}^{t}Y_{r}.
+    \addtocounter{neq}{1}
+\end{equation}
+
+La estimación de la población total usando metodología bayesiana es
+$E(y_{r}|y_{s})=E_{\theta}[E_{yr}(y_{r}|y_{s},\theta)|y_{s}]$, bajo el modelo $Y=A1\theta+e,E_{y_{r}}(y_{r}|y_{s},\theta)=A_{r}1_{r}\theta$.
+\\
+\newline
+Ahora bien. el estimador bajo mínimos cuadrados de $\theta$ es:
+\begin{equation}
+\hat{\theta}=(1_{s}^tA_{s}V_{ss}^{-1}A_{s}1_{s})^{-1}1_{s}^tA_{s}V_{ss}^{-1}y_{s}
+\addtocounter{neq}{1}
+\end{equation}
+\\
+y la estimación empírica bayesiana para la población es:
+\begin{equation}
+\hat{T}_{EB}=1_{s}^ty_{s}+1_{r}^rA_{r}1_{r}(1_{s}^tA_{s}V_{ss}^{-1}A_{s}1_{s})^{-1}1_{s}^tA_{s}V_{ss}^{-1}y_{s}.
+    \addtocounter{neq}{1}
+\end{equation}
+\newline
+Para obtener el estimador de Horvitz-Thompson se usará la matriz empírica bayesiana utilizando los supuestos señaladas por \citet{meeden1999noninformative}.
+\\
+\newline
+Se define la matriz diagonal $\pi$ como una matriz $N \times N$. Donde los $\pi_{ii} = \pi_{i}$ con $i = 1,2,\cdot\cdot\cdot,N$ son las probabilidades de inclusión.
+\begin{equation}
+\pi=\begin{bmatrix}
+\pi_{s} &0 \\ 
+0 &\pi_r 
+\end{bmatrix}
+    \addtocounter{neq}{1}
+\end{equation}
+
+Donde $\pi_{s}$ es una matriz diagonal de $n \times n$ y $\pi_{r}$ es una matriz diagonal de $(N-n) \times (N-n)$ con $\sum_{i=1}^N \pi_{i}=n$.
+\\
+\newline
+De todo lo anterior se obtiene que:
+\begin{equation}
+\hat{T}_{EB}=1_{s}^t\pi_{s}^{-1}y_{s}
+    \addtocounter{neq}{1}
+\end{equation}
+
+Esta ecuación representa la matriz del estimador de Horvitz-Thompson, conocido como el $\pi$-estimador, para el total de la población.
+
+\subsubsection{Estimador de regresión general}
+En esta sección se introduce el estimador de regresión genera presentado en una forma más conveniente utilizando matrices. Esto facilita las derivaciones posteriores. La idea es mejorar posiblemente el $\pi$ estimador básicos utilizando información auxiliar, \citet{sarndal2003model} emplean la teoría clásica del diseño de muestreo, con probabilidades de inclusión, y el modelo de regresión $Y = X\beta + e$. con $e \sim  N(0,V)$.
+
+\begin{equation}
+\hat{T}_{ERG}=\sum_{k=1}^{n}\frac{y_{k}}{\pi_{k}}+\sum_{j=1}^{p}\hat{\beta }_{j}\left(\sum_{k=1}^{N}X_{jk}-\sum_{k=1}^{n}\frac{X_{jk}}{\pi_{k}}\right)
+    \addtocounter{neq}{1}
+\end{equation}
+
+Donde $y_{k}$ es la variable de interés , con $k = 1,2,\cdot\cdot\cdot,N$, $\pi_{k}$ la probabilidad de inclucusión, $\hat{\beta}_{j}$ es el parámetro de regresión desconocido, para $j = 1,2,\cdot\cdot\cdot,p$ y $X_{jk}$ una variable auxiliar conocida.
+\\
+\newline 
+
+\citet{sarndal2003model} sugieren que la estimación del parámetro $\hat{\beta}$ es:
+
+\begin{equation}
+\hat{\beta}=\sum_{k=1}^{n}\left(\frac{X_{k}X_{k}^t}{\sigma _{k}^2\pi_{k}}\right )^{-1}\sum_{k=1}^{n}\frac{X_{k}y_{k}}{\sigma _{k}^2\pi_{k}}
+    \addtocounter{neq}{1}
+\end{equation}
+
+Bajo un diseño MAS se obtiene:
+\begin{equation}
+\hat{\beta}_{s}=(X_{s}^{t}\Sigma^{-1}X_{s})^{-1}X_{s}^{t}\Sigma^{-1}y_{s}
+    \addtocounter{neq}{1}
+\end{equation}
+
+Donde $\Sigma$ es la matriz de varianzas y covarianzas $p \times p$. Usando la notación de la sección anterior tenemos que:
+\begin{equation}
+\hat{T}_{ERG}=1^{t}X\hat{\beta}_{s}+1_{s}^{t}\pi_{s}^{-1}(y_{s}-X_{s}^{t}\hat{\beta}_{s})
+    \addtocounter{neq}{1}
+\end{equation}
+
+Asumiendo que $\Sigma = I\sigma^2$ y utilizando un MAS la ecuación anterior se puede escribir como:
+
+\begin{equation}
+\hat{T}_{ERG}=1^{t}X\hat{\beta}_{s}+\frac{N}{n}1_{s}^{t}(I_{s}-P_{s})y_{s}
+    \addtocounter{neq}{1}
+\end{equation}
+
+Donde, de nuevo $\hat{\beta}=(X_{s}^tX_{s})^{-1}X_{s}^ty_{s}$ es el estimador de mínimos cuadrados de $\beta$ y $P_{s} = X_{s}(X_{s}^t X_{s})^{-1}X_{s}^t$ es la matriz de proyección sobre el espacio columnas de $X_{s}$.
+
+\subsubsection{Un estimador bayesiano empírico para regresión}
+El estimador Bayesiano empírico de la población total es $T=1_{s}^ty_{s}+1_{r}^ty_{r}$.
+\\
+\newline
+\citet{royall1982balanced} centraron la atención en los supuestos necesarios para los robustez de sus procedimientos estadísticos para la predicción de la población total $T$ dado $y_{s}$. Aquí se usa el modelo $Y=X\beta +U\gamma+e$. Donde, $U$ son regresores adicionales con un vector de coeficientes $\gamma$ fijos.
+\\
+\newline
+$X=\begin{bmatrix}
+X_{s}\\ 
+X_{r}
+\end{bmatrix},$ con $X$ de $N \times p,$ $X_{s}$ de $n\times p$ y $X_{r}$ de $(N-n) \times p$
+\\
+\newline
+$U=\begin{bmatrix}
+U_{s}\\ 
+U_{r}
+\end{bmatrix},$ con $U$ de $N \times q,$ $U_{s}$ de $n\times q$ y $U_{r}$ de $(N-n) \times q$
+\\
+\newline
+Finalmente $\gamma$ es un vector de $q \times 1$ y $e\sim N(0,V),$ con $V=\begin{bmatrix}
+V_{ss} &0 \\ 
+0 &V_{rr} 
+\end{bmatrix}.$
+\\
+\newline
+\\
+Para estimar el total poblacional $T$ se usará $E(y_{r} | y_{s})$. El modelo cuando $\beta$ es estiamdo nos queda $Y = X\hat{\beta} + U\gamma + e$. Bajo este modelo:
+
+\begin{equation}
+E(y_{r} | y_{s})=X_{r}\hat{\beta}_{s}+U_{r}(U_{s}^tV_{ss}^{-1}U_{s})^{-1}U_{s}^tV_{ss}^{-1}(y_{s}-X_{s}\hat{\beta}_{s})
+    \addtocounter{neq}{1}
+\end{equation}
+
+
+Luego la estimación bayesiana empírica del total poblacional es:
+
+\begin{equation}
+T_{EB}=1_{s}^ty_{s}+1_{r}^t[X_{r}\hat{\beta}_{s}+U_{r}(U_{s}^tV_{ss}^{-1}U_{s})^{-1}U_{s}^tV_{ss}^{-1}(y_{s}-X_{s}\hat{\beta}_{s})]
+    \addtocounter{neq}{1}
+\end{equation}
+
+
+haciendo, $V=\pi(I-\pi)^{-1}$ y $U=\pi1^t$, el estimador $\hat{T}_{EB}$ nos queda:
+
+\begin{equation}
+\hat{T}_{EB}=1^tX\hat{\beta}_{s} + 1_{s}^t\pi_{s}^{-1}(y_{s}-X_{s}\hat{\beta}_{s})
+    \addtocounter{neq}{1}
+\end{equation}
+
+
+\subsubsection{Estimador Bayesiano}
+El estimador Bayesiano esta dado por:
+
+\begin{equation}
+\hat{T}_{B}= 1^tX\mu_{\beta}+ 1_{s}^t\pi_{s}^{-1}(y_{s}-\pi_{s}X_{s}\mu_{\beta})
+    \addtocounter{neq}{1}
+\end{equation}
+
+Donde, $\mu_{\beta}=(X_{s}^tV_{ss}^{-1}X_{s})^{-1}X_{s}^tV_{ss}^{-1}y_{s}$.
+
+\subsection{Inferencia Jackknife bayesiana para una proporción}
+
+Considere $U={u_{1},u_{2},\cdots,u_{k},\cdots,u_{N}},$ una población finita de tamaño N, en donde cada unidad $u_{i} (i=1,2,\cdots,N)$ tiene asociada una variable dicótomica $y_{i},$ que toma el valor de 0 cuando la observación no posee la característica de interés y 1 cuando la posee. Una muestra aleatoria s es seleccionada de U, de acuerdo con un diseño de muestreo probabilístico. En la muestra, la variable de interés $y$ es observada para todos los elementos seleccionados. El interés consiste en estimar la distribución de probabilidad posterior para el parámetro $\rho_{y}=\sum_{i\in k}\frac{y_{i}}{N},$ haciendo uso de los valores de la muestra y de las probabilidades de inclusión inducidas por el diseño muestral.
+\\
+\newline
+La metodología Jackknife bayesiana considera que el parámetro $\rho_{y}$ está en función de la distribución acumulada de la que proviene la muestra aleatoria $s$, la cual ha sido seleccionada con un diseño muestral particular y con la que se ha estimado $\rho_{y}$, haciendo uso del estimador de Horvitz-Thompson deﬁnido como:
+$$\hat{\rho}_{y\pi}=\frac{1}{N}\sum_{i\in s}\frac{y_{i}}{\pi_{i}}$$
+\\
+con $\hat{N}=\sum_{i\in s}\frac{1}{\pi_{i}}$ y $\pi_{i}=Pr(i\in s)$
+\\
+\newline
+Supongamos entonces que la distribución de probabildiad condicional $\xi(y|\rho_{y})$ de $y$ existe; esta es, a su vez, la verosimilitud de $y$ en función de $\rho_{y}.$ Sea $\xi(\rho_{y})$ la densidad a priori del parámetro $\rho_{y}.$ Por el teorema de bayes se tiene:
+
+\begin{equation}
+    \xi(\rho_{y}|y) \propto \xi(y|\rho_{y})\xi(\rho_{y})
+\end{equation}
+donde $\xi(\rho_{y}|y)$ es la distribución posterior de $\rho_{y}$ dada la observación de $y$ en la muestra.
+\\
+\newline
+Al observar la forma de la distribución posterior de $\rho_{y}$ se debe pensar en la escogencia de una distribución a priori para $\rho_{y},$ y en un supuesto distribucional para $y$ condicionado al parámetro $\rho_{y}.$
+\\
+\newline
+En cuanto a la distribución a priori para $\rho_{y}$ existe una gama de posibilidades entre distribuciones previas informativas y no informativas, tales como la distribución uniforme y la distribución beta o cualquier distribución que tenga como soporte el intervalo (0,1). En cuanto al supuesto distribucional para $y$ condicionado al parámetro $\rho_{y}$ se debe tener en cuenta que en la teoría de muestreo no se hacen dichos supuestos, por lo que se dice que son de libre distribución. Es por esto último, que la metodología Jackknife bayesiana juega un papel fundamental en la metodología propuesta, la cual consiste en realizar una obtención de $\xi(y|\rho_{y})$ y $\xi(\rho_{y}|y)$ de forma empírica.
+
+\subsubsection{Distribución posterior de $\rho$ con a priori informativa}
+
+Según \citet{shao2012jackknife}, el método Jackknife bayesiano evita asumir una forma paramétrica de la distribución que genera los datos. Si se está interesado en el parámetro $\rho_{y}$ y la información a priori sobre $\rho_{y}$ está resumida en $\xi(\rho_{y})$ y si $y_{1},y_{2},\cdots,\y_{n}$ representan las observaciones de la variable de interés en la muestra con densidad desconocida $\xi,$ entonces es posible aproximar a $\xi$ utilizando un estimador de densidades, por ejemplo, $\hat{\xi}(y|\rho_{y})$ y hallar un estimador de la distribución posterior como:
+\begin{equation}
+    \xi(\rho_{y}|y)\propto\xi(\rho_{y})\hat{L}(y_{1},\cdots,\y_{n}|\rho_{y})
+\end{equation}
+donde $\hat{L}(y_{1},\cdots,\y_{n}|\rho_{y})$ representa la estimación Jackknife de la función de verosimilitud, proporcional a $\hat{\xi}.$ A continuación se presenta la secuencia de pasos necesarios para determinar $\hat{L}:$
+\begin{enumerate}
+    \item Usando los datos muestrales $y_{1},y_{2},\cdots,y_{n}$ se construye una población artificial $U^{*}.$ Una forma de construir dicha población consiste en replicar los $y_{i}$ tantas veces como su factor de expansión $\frac{1}{\pi_{i}},$ siguiendo el principio de representatividad.
+    \item Seleccionar una serie de muestras Jackknife de $U^{*}$ denotadas por $s^{*}$ con un diseño idéntico al usado para seleccionar la muestra original de $s$ de $U.$ Repartir B veces para cada muestra Jackknife $s^{*}_{b}(b=1,2,\cdots,B),$ calcular el $\pi$ estimador $\rho^{*}_{y\pi b}:$
+    \begin{equation}
+        \hat{\rho}^{*}_{y\pi b}=\frac{1}{\hat{N}^{*}}\sum_{i\in s^{*}}\frac{y^{*}_{ib}}{\pi^{*}_{ib}}
+    \end{equation}
+    
+    Donde $\hat{N}^{*}=\sum_{i\in s^{*}}\frac{1}{\pi^{*}_{i}},$ $\pi^{*}_{i}$ es la probabilidad de inclusión de los elementos en la muestra Jackknife y $y^{*}_{ib}$ es el i-ésimo elemento de la b-ésima muestra Jackknife.
+    \item Con los anteriores estimadores $\rho^{*}_{y\pi 1},\cdots,\rho^{*}_{y\pi B}$ calcular el estimador de densidad kernel definido como:
+    \begin{equation}
+        f_{B}(u)=\frac{1}{Bh_{B}}\sum^{B}_{b=1}K(\frac{u-(\hat{\rho}^{*}_{y\pi b}-\hat{\rho}_{y\pi})}{h_{B}})
+    \end{equation}
+    Donde la función K es llamada función núcleo (kernell), y en general, es una función de densidad continua, unimodal y simétrica alrededor de 0. El parámetro $h_{b}$ se conoce como parámetro suavizador.
+    \\
+    \newline
+    Haciendo $u=\hat{\rho}-\rho_{y}$ en la ecuación anterior, $\hat{f}_{B}(\hat{\rho}-\rho_{y})$ es una estimación de la densidad muestral de $\hat{\rho}_{y\pi}$ dado $\rho_{y}.$ Evaluándola en $x=\hat{\rho}_{y\pi}$ resulta como función de $\rho_{y}$ para ser usada como verosimilitud
+    \begin{equation}
+        \hat{L}_{B}(\hat{\rho}_{y\pi}|\rho_{y})=\frac{1}{Bh_{B}}\sum^{B}_{b=1}K(\frac{2\hat{\rho}_{y\pi}-\rho-\hat{\rho}^{*}_{y\pi b}}{h_{B}})
+    \end{equation}
+    
+    \item La distribución posterior resultante $\xi(\hat{\rho}_{y\pi}|\rho_{y})$ es entonces proporcional a $\xi(\rho_{y})\hat{L}(\hat{\rho}_{y\pi}|\rho_{y})$ y la constante de normalización se puede hallar mediante integración numérica.
+    \\
+    \newline
+    De esta forma es posible construir un estimador bayesiano de la distribución posterior de $\rho_{y}$ como:
+    $$\xi(\rho_{y}|y)=c(y)x\xi(\rho_{y})x\hat{L}(y_{1},\cdots,y_{n}|\rho_{y})$$
+    donde $c(y)$ se puede obtener por integración numérica como:
+    $$c(y)=\frac{1}{\int\xi(\rho_{y})x\hat{L}(y_{1},\cdots,y_{n}|\rho_{y})d\rho_{y}}$$
+    
+    La función K se llama función núcleo (o kernel) y, en general, es una función de densidad continua, unimodal y simétrica alrededor de 0. El parámetro $h_{B}$ se conoce como parámetro de suavizamiento. \citet{hollander2013nonparametric} muestra las densidades Kernel más usadas.
+    
+\end{enumerate}
+
+\subsubsection{Inferencia bayesiana sobre la proporción}
+
+Para realizar estimaciones de un parámetro mediante inferencia bayesiana, se requiere de una muestra aleatoria obtenida a partir de una distribución posterior dada. En este caso, se genera una muestra aleatoria $\rho^{1}_{y},\rho^{2}_{y},\cdots,\rho^{m}_{y}$ a través de la distribución posterior $\xi(\rho_{y}|y)$ de la siguiente manera:
+\begin{enumerate}
+    \item Generar $p_{1},p_{2},\cdots,p_{m}$ valores a partir de una distribución con soporte (0,1), sin pérdida de generalidad,  la distribución uniforme (0,1).
+    \item Evaluar cada $p_{i}$ en $\xi(\rho_{y}|y),$ con $i=1,2,\cdots,m,$ obteniendo así, la probabilidad de selección de cada valor.
+    \item Por último, la muestra requerida $\rho^{1}_{y},\rho^{2}_{y},\cdots,\rho^{m}_{y}$ se obtiene tomando una muestra con reemplazo de $p_{1},p_{2},\cdots,p_{m}$ con probabilidad de selección $\xi(p_{i}|y)$ para $i=1,2,\cdots,m.$
+\end{enumerate}
+Las funciones comúnmente utilizadas para minimizar dichos errores son: la función de pérdida cuadrática, función de pérdida en error absoluto y la función escalonada \citep{box2011bayesian}.
+
+\paragraph{Función de pérdida cuadrática para la proporción}
+\\
+Se considera una cierta función $L(\rho_{y}\rho_{c})=(\rho_{c}-\rho_{y})^{2}$ la cual se denotará como función de pérdida cuadrática asociada al parámetro $\rho_{y}$, y sea $\rho_{c}$ la estimación considerada para $\rho_{y}.$ Sean $\rho^{1}_{y},\rho^{2}_{y},\cdots,\rho^{m}_{y}$ una muestra aleatoria de tamaño $m$ generada a través de la distribución posterior $\xi(\rho_{y}|y)$ mediante el método Metropolis - Hastings. La diferencia entre $\rho_{c}$ y el valor real de $\rho_{y}$ se hace mínima si $\rho_{c}$ se estima empleando la siguiente expresión:
+\begin{equation}
+    \rho_{c}=E(\rho_{y}|y)=\int_{-\infty}^{+\infty}\rho_{y}\xi(\rho_{y}|y)d\rho_{y}
+\end{equation}
+Esta integral se calcula númericamente puesto que $\xi(\rho_{y}|y)$ es una función empírica. Por otro lado, la estimación vía Monte Carlo de la media posterior es:
+\begin{equation}
+    \rho_{c}=\bar{\rho}_{y}=\frac{\sum_{j=1}^{m}\rho_{y}^{j}}{m}
+\end{equation}
+y un error estándar estimado es:
+\begin{equation}
+    se_{\rho_{c}}= \sqrt{\frac{\sum_{j=1}^{m}(\rho_{y}^{j}-\rho_{c})^{2}}{(m-1)m}}
+\end{equation}
+En consecuencia, $\rho_{c}$ es el estimador puntual de $\rho_{y}$ cuando tomamos como función de pérdida la función de pérdida cuadrática.
+
+\bibliographystyle{apalike}
+\bibliography{REFERENCIAS}
+
+\end{document}
